@@ -20,6 +20,18 @@ const reducer = (state, action) => {
             cart: tempCart,
         }
     }
+    if (action.type === "DECREASE") {
+        let tempCart = state.cart.map((item) => {
+            if (item.id === action.payload) {
+                return {...item, amount: item.amount - 1 };
+            }
+            return item;
+        });
+        return {
+            ...state,
+            cart: tempCart,
+        }
+    }
     return state;
 }
 
