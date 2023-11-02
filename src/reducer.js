@@ -32,6 +32,23 @@ const reducer = (state, action) => {
             cart: tempCart,
         }
     }
+    if (action.type === "GET_TOTALS") {
+        const { total, amount } = state.cart.reduce(
+            (cartTotal, cartItem) => {
+                cartTotal += cartItem.amount * cartItem.price;
+                cartTotal.amount += cartItem.amount;
+                return cartTotal;
+            }, { total: 0, amount: 0 }
+        );
+        return {...state, total, amount };
+    }
+
+    if (action.type === "LOADING") {
+        return {...state, loading: true };
+    }
+    if (action.type === "DISPLAY_ITEMS") {
+        return {...state, cart: action.payload, loading: false };
+    }
     return state;
 }
 

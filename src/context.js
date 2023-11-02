@@ -25,6 +25,15 @@ const AppProvider = ({ children }) => {
         const decrease = (id) => {
             dispatch({ type: "DECREASE", payload: id });
         };
+        const fetchData = async() => {
+            dispatch({ type: "LOADING" });
+            const respone = await fetch(url);
+            const cart = await respone.json(respone);
+            dispatch({ type: "DISPLAY_ITEMS", payload: cart });
+        }
+        useEffect(() => {
+            fetchData();
+        }, []);
         return ( <
             AppContext.Provider value = {
                 {
